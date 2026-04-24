@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>广州农商银行 - 挚友荐面礼</title>
+<style>
+  :root {
+    --primary: #1a3a5c;
+    --primary-light: #2d5a87;
+    --accent: #c9a227;
+    --accent-light: #f0d078;
+    --success: #27ae60;
+    --success-light: #5dd699;
+    --warning: #f39c12;
+    --danger: #e74c3c;
+    --bg: #f5f6f8;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+    --border: #e0e0e0;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body { overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== Phone Container ===== */
+  .phone-container {
+    max-width: 430px;
+    margin: 0 auto;
+    background: white;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ===== Header Bar ===== */
+  .header-bar {
+    height: 56px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-bar .page-title {
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .header-bar .back-btn {
+    position: absolute;
+    left: 16px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+  }
+  .header-bar .back-btn:hover { background: rgba(255,255,255,0.25); }
+
+  .header-bar .menu-btn {
+    position: absolute;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+  }
+
+  /* ===== Tab Bar ===== */
+  /* ===== Pages ===== */
+  .page { display: none; min-height: 100vh; padding-bottom: 80px; }
+  .page.active { display: block; }
+
+  /* ===== Page 1: Home ===== */
+  .home-hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    padding: 32px 24px 48px;
+    color: white;
+    text-align: center;
+  }
+
+  .home-hero .greeting { font-size: 13px; opacity: 0.85; margin-bottom: 8px; }
+  .home-hero .title { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+  .home-hero .subtitle { font-size: 14px; opacity: 0.9; margin-bottom: 12px; }
+  .home-hero .period {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    font-size: 13px;
+  }
+
+  .home-content { padding: 0 16px; }
+
+  .period-card {
+    background: linear-gradient(135deg, #fff9e6 0%, #fff3cc 100%);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    margin: -32px 16px 16px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .period-card .period-label { font-size: 12px; color: var(--text-light); margin-bottom: 4px; }
+  .period-card .period-date { font-size: 18px; font-weight: 700; color: var(--primary); }
+
+  .rules-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .rules-card .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .rule-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .rule-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .rule-item:first-child { padding-top: 0; }
+
+  .rule-num {
+    width: 22px;
+    height: 22px;
+    background: var(--accent);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .home-action {
+    padding: 8px 16px 24px;
+  }
+
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--accent) 0%, #e0b020 100%);
+    color: var(--primary);
+    border: none;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(201, 162, 39, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:active { transform: scale(0.98); }
+
+  /* ===== Page 2: Register ===== */
+  .form-container {
+    padding: 20px 24px;
+  }
+
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    display: block;
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+    font-family: inherit;
+  }
+  .form-input:focus { border-color: var(--primary); }
+  .form-input::placeholder { color: #ccc; }
+
+  .input-row { display: flex; gap: 10px; }
+  .input-row .form-input { flex: 1; }
+
+  .btn-code {
+    padding: 14px 16px;
+    background: white;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    min-width: 110px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .btn-code:disabled { background: #f0f0f0; color: #bbb; border-color: #ddd; cursor: not-allowed; }
+  .btn-code.counting { background: #fff8e1; color: var(--warning); border-color: var(--warning); }
+
+  .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+  }
+  .btn-submit:active { opacity: 0.9; }
+
+  .privacy-box {
+    display: flex;
+    gap: 10px;
+    padding: 14px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+
+  .privacy-box input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .privacy-box .text {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .privacy-box .text a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  /* ===== Success Page ===== */
+  .success-page {
+    text-align: center;
+    padding: 40px 24px;
+  }
+
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--success) 0%, var(--success-light) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 40px;
+    color: white;
+  }
+
+  .success-title { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+  .success-subtitle { font-size: 14px; color: var(--text-light); margin-bottom: 28px; }
+
+  .code-box {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .code-box .label { font-size: 13px; color: var(--text-light); margin-bottom: 10px; }
+
+  .code-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 4px;
+    font-family: "SF Mono", "Menlo", monospace;
+    margin-bottom: 12px;
+  }
+
+  .btn-copy {
+    display: inline-block;
+    font-size: 14px;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 6px 16px;
+    border: 1.5px solid var(--accent);
+    border-radius: 20px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn-copy:active { background: #fff8e1; }
+
+  .btn-share {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--accent);
+    color: var(--primary);
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(201,162,39,0.3);
+  }
+
+  /* ===== Page 3: My Referrals ===== */
+  .referral-hero {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    padding: 28px 24px 32px;
+    color: white;
+    text-align: center;
+  }
+
+  .referral-hero .label { font-size: 13px; opacity: 0.85; margin-bottom: 10px; }
+  .referral-hero .code { font-size: 30px; font-weight: 700; letter-spacing: 4px; font-family: "SF Mono", "Menlo", monospace; margin-bottom: 20px; }
+
+  .qr-box {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    display: inline-block;
+  }
+
+  .qr-placeholder {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #bbb;
+  }
+
+  .btn-share-referral {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 28px;
+    background: var(--accent);
+    color: var(--primary);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .records-section { padding: 16px; }
+
+  .records-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .records-title { font-size: 15px; font-weight: 700; color: var(--primary); }
+  .records-count { font-size: 12px; color: var(--text-light); }
+
+  .record-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+
+  .record-avatar {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #999;
+    flex-shrink: 0;
+  }
+
+  .record-info { flex: 1; }
+  .record-name { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .record-time { font-size: 12px; color: var(--text-light); }
+
+  .record-badges { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+
+  .badge {
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-audit { background: #e8f4fd; color: #0c5460; }
+  .badge-qualified { background: #d4edda; color: #155724; }
+  .badge-unqualified { background: #fce8e8; color: var(--danger); }
+  .badge-pending { background: #fff3cd; color: #856404; }
+  .badge-done { background: #e8e8e8; color: #666; }
+
+  /* ===== Page 4: Progress/Claim ===== */
+  .progress-hero {
+    background: white;
+    padding: 28px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .progress-hero .label { font-size: 13px; color: var(--text-light); margin-bottom: 6px; }
+  .progress-hero .count { font-size: 42px; font-weight: 700; color: var(--primary); line-height: 1.2; }
+  .progress-hero .count span { font-size: 18px; font-weight: normal; color: var(--text-light); }
+  .progress-hero .limit { font-size: 13px; color: var(--text-light); margin-top: 6px; }
+
+  .progress-list { padding: 16px; }
+
+  .progress-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+
+  .progress-card.claimed { border: 1.5px solid var(--success); }
+
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .progress-name { font-size: 15px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .progress-date { font-size: 12px; color: var(--text-light); }
+
+  .progress-status-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 12px;
+  }
+
+  .status-chip {
+    flex: 1;
+    padding: 6px 8px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .status-chip.audit { background: #e8f4fd; color: #0c5460; }
+  .status-chip.qualified { background: #d4edda; color: #155724; }
+  .status-chip.unqualified { background: #fce8e8; color: var(--danger); }
+  .status-chip.pending { background: #fff3cd; color: #856404; }
+  .status-chip.done { background: #e8e8e8; color: #666; }
+
+  /* Gift link display */
+  .gift-link-box {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border: 1px solid var(--success);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+  }
+
+  .gift-link-label { font-size: 12px; color: var(--success); font-weight: 700; margin-bottom: 6px; }
+  .gift-link-url {
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--primary);
+    font-family: monospace;
+    word-break: break-all;
+  }
+
+  .progress-bar-wrap {
+    height: 6px;
+    background: #e8e8e8;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success) 0%, var(--success-light) 100%);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+  .progress-bar-fill.low { background: #ccc; }
+
+  .progress-note { font-size: 12px; color: var(--text-light); margin-bottom: 12px; }
+
+  .btn-claim {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    background: linear-gradient(135deg, var(--success) 0%, var(--success-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(39,174,96,0.3);
+    transition: transform 0.2s;
+  }
+  .btn-claim:active { transform: scale(0.98); }
+  .btn-claim:disabled { background: #ccc; box-shadow: none; cursor: default; transform: none; }
+  .btn-claim.claimed { background: #e0e0e0; color: #888; }
+
+  .claim-expire {
+    font-size: 11px;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 14px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .empty-icon { font-size: 56px; opacity: 0.4; margin-bottom: 16px; }
+  .empty-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .empty-desc { font-size: 13px; color: var(--text-light); }
+
+</style>
+</head>
+<body>
+
+<div class="phone-container">
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== Page 1: Home ===== -->
+  <div class="page active" id="page-home">
+    <div class="header-bar">
+      <span class="page-title">挚友荐面礼</span>
+    </div>
+    <div class="home-hero">
+      <div class="greeting">尊敬的私钻客户</div>
+      <div class="title">挚友荐面礼</div>
+      <div class="subtitle">成功推荐，最高可获双份礼品</div>
+      <div class="period">📅 2026.05.01 - 2026.07.31</div>
+    </div>
+
+    <div class="home-content">
+      <div class="period-card">
+        <div class="period-label">活动进行中</div>
+        <div class="period-date">2026年5月1日 - 7月31日</div>
+      </div>
+
+      <div class="rules-card">
+        <div class="card-title">🎯 活动规则</div>
+        <div class="rule-item">
+          <span class="rule-num">1</span>
+          <span>私钻客户转介非私钻客户提升（月日均达标≥300万），推荐人与被推荐人各得一份微信立减金</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">2</span>
+          <span>私钻客户转介新私钻客户（月日均达标≥300万），推荐人与被推荐人各得一份微信立减金</span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">3</span>
+          <span>每成功推荐一人，可获得一份礼品；每位客户累计最多可领 <strong>3 份</strong></span>
+        </div>
+        <div class="rule-item">
+          <span class="rule-num">4</span>
+          <span>达标后请在活动有效期内领取，逾期视为放弃</span>
+        </div>
+      </div>
+
+      <!-- Quick entry cards -->
+      <div style="display:flex; gap:12px; margin: 0 16px 16px;">
+        <div style="flex:1; background:white; border-radius:12px; padding:14px; text-align:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.05);" onclick="goTab(2)">
+          <div style="font-size:24px; margin-bottom:6px;">👥</div>
+          <div style="font-size:13px; font-weight:600; color:var(--primary);">我的推荐</div>
+          <div style="font-size:11px; color:var(--text-light);">查看推荐码</div>
+        </div>
+        <div style="flex:1; background:white; border-radius:12px; padding:14px; text-align:center; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0,0.05);" onclick="goTab(3)">
+          <div style="font-size:24px; margin-bottom:6px;">🎁</div>
+          <div style="font-size:13px; font-weight:600; color:var(--primary);">我的礼品</div>
+          <div style="font-size:11px; color:var(--text-light);">查看领取进度</div>
+        </div>
+      </div>
+
+      <div class="home-action">
+        <button class="btn-primary" onclick="goTab(1)">立即参与活动</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Page 2: Register ===== -->
+  <div class="page" id="page-register">
+    <div class="header-bar">
+      <button class="back-btn" onclick="goTab(0)">←</button>
+      <span class="page-title">报名参与活动</span>
+      <div style="width:32px;"></div>
+    </div>
+
+    <div class="form-container">
+      <!-- Privacy -->
+      <div class="privacy-box">
+        <input type="checkbox" id="privacy" checked>
+        <label class="text" for="privacy">
+          我已阅读并同意<a href="#">《用户隐私协议》</a>和<a href="#">《活动规则》</a>，授权广州农商银行使用我的相关信息用于活动参与和礼品发放。
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">推荐人姓名</label>
+        <input type="text" class="form-input" id="nameInput" placeholder="请输入您的姓名" value="张明">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">推荐人手机号</label>
+        <div class="input-row">
+          <input type="tel" class="form-input" id="phoneInput" placeholder="请输入手机号" value="13812348888">
+          <button class="btn-code" id="codeBtn" onclick="sendCode()">获取验证码</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">短信验证码</label>
+        <input type="text" class="form-input" id="captchaInput" placeholder="请输入验证码" maxlength="6">
+      </div>
+
+      <button class="btn-submit" onclick="submitForm()">确认报名</button>
+    </div>
+  </div>
+
+  <!-- ===== Register Success ===== -->
+  <div class="page" id="page-success">
+    <div class="header-bar" style="background:white; border-bottom:1px solid var(--border);">
+      <button class="back-btn" style="background:var(--bg); color:var(--primary);" onclick="goTab(0)">←</button>
+      <span class="page-title" style="color:var(--primary);">报名成功</span>
+      <div style="width:32px;"></div>
+    </div>
+
+    <div class="success-page">
+      <div class="success-icon">✓</div>
+      <div class="success-title">报名成功！</div>
+      <div class="success-subtitle">快把推荐码分享给好友吧</div>
+
+      <div class="code-box">
+        <div class="label">您的专属推荐码</div>
+        <div class="code-value" id="myCode">GZRC2026042401</div>
+        <div class="btn-copy" onclick="copyCode()">👆 点击复制</div>
+      </div>
+
+      <div class="btn-share" onclick="goTab(2)">分享给好友</div>
+    </div>
+  </div>
+
+  <!-- ===== Page 3: My Referrals ===== -->
+  <div class="page" id="page-referrals">
+    <div class="header-bar" style="position:sticky; top:0; z-index:10;">
+      <button class="back-btn" onclick="goTab(0)">←</button>
+      <span class="page-title" style="color:white;">我的推荐</span>
+      <div style="width:32px;"></div>
+    </div>
+    <div class="referral-hero">
+      <div class="label">我的推荐码</div>
+      <div class="code">GZRC2026042401</div>
+      <div class="qr-box">
+        <div class="qr-placeholder">二维码展示区</div>
+      </div>
+      <div class="btn-share-referral" onclick="shareReferral()">📤 分享给好友</div>
+    </div>
+
+    <div class="records-section">
+      <div class="records-header">
+        <span class="records-title">我的推荐记录</span>
+        <span class="records-count">· 每人不超过3份礼品</span>
+      </div>
+
+      <!-- Record 1: qualified + pending -->
+      <div class="record-card">
+        <div class="record-avatar">李</div>
+        <div class="record-info">
+          <div class="record-name">李女士</div>
+          <div class="record-time">绑定：2026-04-18 · 达标：2026-04-23</div>
+        </div>
+        <div class="record-badges">
+          <span class="badge badge-qualified">已达标</span>
+          <span class="badge badge-pending">待领取</span>
+        </div>
+      </div>
+
+      <!-- Record 2: qualified + done -->
+      <div class="record-card">
+        <div class="record-avatar">王</div>
+        <div class="record-info">
+          <div class="record-name">王先生</div>
+          <div class="record-time">绑定：2026-04-15 · 达标：2026-04-20</div>
+        </div>
+        <div class="record-badges">
+          <span class="badge badge-qualified">已达标</span>
+          <span class="badge badge-done">已领取</span>
+        </div>
+      </div>
+
+      <!-- Record 3: audit -->
+      <div class="record-card">
+        <div class="record-avatar">陈</div>
+        <div class="record-info">
+          <div class="record-name">陈先生</div>
+          <div class="record-time">绑定：2026-04-10 · 审核中</div>
+        </div>
+        <div class="record-badges">
+          <span class="badge badge-audit">审核中</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Page 4: Progress ===== -->
+  <div class="page" id="page-progress">
+    <div class="header-bar">
+      <span class="page-title">我的礼品</span>
+    </div>
+
+    <div class="header-bar" style="position:sticky; top:0; z-index:10;">
+      <button class="back-btn" onclick="goTab(0)">←</button>
+      <span class="page-title" style="color:white;">我的礼品</span>
+      <div style="width:32px;"></div>
+    </div>
+    <div class="progress-hero">
+      <div class="label">累计已领取礼品</div>
+      <div class="count">1 <span>/ 3 份</span></div>
+      <div class="limit">您已领取 1 份礼品，最多可领 3 份</div>
+    </div>
+
+    <div class="progress-list">
+
+      <!-- Claimed -->
+      <div class="progress-card claimed">
+        <div class="progress-top">
+          <span class="progress-name">🧧 微信立减金兑换码</span>
+          <span class="progress-date">2026-04-16</span>
+        </div>
+        <div class="progress-status-row">
+          <span class="status-chip qualified">已达标</span>
+          <span class="status-chip done">已领取</span>
+        </div>
+        <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:100%"></div></div>
+        <button class="btn-claim claimed" disabled>已领取</button>
+      </div>
+
+      <!-- Can claim -->
+      <div class="progress-card">
+        <div class="progress-top">
+          <span class="progress-name">🧧 微信立减金兑换码</span>
+          <span class="progress-date">2026-04-18</span>
+        </div>
+        <div class="progress-status-row">
+          <span class="status-chip qualified">已达标</span>
+          <span class="status-chip pending">待领取</span>
+        </div>
+        <div class="gift-link-box">
+          <div class="gift-link-label">🏦 微信立减金领取链接</div>
+          <div class="gift-link-url">https://gift.bank.com/v/Y8K2M</div>
+        </div>
+        <button class="btn-claim" onclick="claimGift(this)">立即领取</button>
+        <div class="claim-expire">⏰ 7日内有效 · 逾期自动失效</div>
+      </div>
+
+      <!-- Not qualified -->
+      <div class="progress-card">
+        <div class="progress-top">
+          <span class="progress-name">🧧 微信立减金兑换码</span>
+          <span class="progress-date">2026-04-20</span>
+        </div>
+        <div class="progress-status-row">
+          <span class="status-chip unqualified">未达标</span>
+          <span class="status-chip" style="background:#eee; color:#bbb;">待领取</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill low" style="width:30%"></div>
+        </div>
+        <div class="progress-note">资产达标进度：30%（需≥300万）</div>
+        <button class="btn-claim" disabled>未达标</button>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</div>
+
+<script>
+  // Tab navigation
+  const pages = ['home', 'register', 'referrals', 'progress'];
+  const pageIds = pages.map(p => 'page-' + p);
+
+  function goTab(index) {
+    // Hide all pages
+    pageIds.forEach(id => {
+      document.getElementById(id).classList.remove('active');
+    });
+    // Show target page
+    document.getElementById(pageIds[index]).classList.add('active');
+    // Scroll to top
+    window.scrollTo(0, 0);
+  }
+
+  // Toast
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() {
+      toast.classList.remove('show');
+    }, 2000);
+  }
+
+  // Countdown timer
+  let countdownTimer = null;
+  function sendCode() {
+    const btn = document.getElementById('codeBtn');
+    if (countdownTimer) return;
+    let seconds = 60;
+    btn.classList.add('counting');
+    btn.disabled = true;
+    btn.textContent = seconds + '秒后重试';
+    countdownTimer = setInterval(() => {
+      seconds--;
+      if (seconds <= 0) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+        btn.classList.remove('counting');
+        btn.disabled = false;
+        btn.textContent = '获取验证码';
+      } else {
+        btn.textContent = seconds + '秒后重试';
+      }
+    }, 1000);
+    showToast('验证码已发送');
+  }
+
+  // Form submit
+  function submitForm() {
+    const name = document.getElementById('nameInput').value.trim();
+    const phone = document.getElementById('phoneInput').value.trim();
+    const captcha = document.getElementById('captchaInput').value.trim();
+    const privacy = document.getElementById('privacy').checked;
+
+    if (!name) { showToast('请输入姓名'); return; }
+    if (!phone || phone.length < 11) { showToast('请输入正确的手机号'); return; }
+    if (!captcha || captcha.length < 6) { showToast('请输入6位验证码'); return; }
+    if (!privacy) { showToast('请先阅读并同意隐私协议'); return; }
+
+    // Generate code and update referrals page
+    const code = 'GZRC' + Date.now().toString().slice(-10);
+    document.querySelector('.referral-hero .code').textContent = code;
+
+    goTab(2);
+    showToast('报名成功！');
+  }
+
+  // Copy code
+  function copyCode() {
+    const code = document.getElementById('myCode').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      showToast('推荐码已复制');
+    }).catch(() => {
+      showToast('复制成功');
+    });
+  }
+
+  // Share referral
+  function shareReferral() {
+    const code = document.querySelector('.referral-hero .code').textContent;
+    if (navigator.share) {
+      navigator.share({
+        title: '广州农商银行推荐有礼',
+        text: '我用我的推荐码 ' + code + ' 参加了广州农商银行的推荐有礼活动，成功推荐最高可获双份礼品！',
+        url: window.location.href
+      });
+    } else {
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('推荐码已复制，快去分享吧！');
+      });
+    }
+  }
+
+  // Claim gift
+  function claimGift(btn) {
+    btn.textContent = '领取成功 ✓';
+    btn.classList.add('claimed');
+    btn.disabled = true;
+    showToast('立减金领取成功！');
+  }
+
+  // Init - set countdown button state
+  document.getElementById('codeBtn').addEventListener('click', sendCode);
+
+</script>
+</body>
+</html>
